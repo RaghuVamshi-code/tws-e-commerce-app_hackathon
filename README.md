@@ -101,19 +101,19 @@ sudo ./aws/install
 1. **Clone the Repository:**
 First, clone this repo to your local machine:<br/>
 ```bash
-git clone https://github.com/LondheShubham153/tws-e-commerce-app.git
+git clone https://github.com/efritznel/3tier-webapp-eks.git
 cd terraform
 ```
 2. **Generate SSH Key Pair:**
 Create a new SSH key to access your EC2 instance:
 ```bash
-ssh-keygen -f terra-key
+ssh-keygen -f new-keypair
 ```
 This will prompt you to create a new key file named terra-key.
 
 3. **Private key permission:** Change your private key permission:
 ```bash
-chmod 400 terra-key
+chmod 400 new-keypair
 ```
 
 4. **Initialize Terraform:**
@@ -136,7 +136,7 @@ terraform apply
 7. **Access Your EC2 Instance;** <br/>
 After deployment, grab the public IP of your EC2 instance from the output or AWS Console, then connect using SSH:
 ```bash
-ssh -i terra-key ubuntu@<public-ip>
+ssh -i new-keypair ubuntu@<public-ip>
 ```
 8. **Update your kubeconfig:**
 wherever you want to access your eks wheather it is yur local machine or bastion server this command will help you to interact with your eks.
@@ -148,7 +148,7 @@ aws configure
 ```
 
 ```bash
-aws eks --region eu-west-1 update-kubeconfig --name tws-eks-cluster
+aws eks --region us-east-1 update-kubeconfig --name ithomelab-eks-cluster
 ```
 9. **Check your cluster:**
 ```bash
@@ -215,7 +215,7 @@ sudo systemctl status jenkins
 > - **Add a New Shared Library:** 
 > - **Name:** Shared
 > - **Default Version:** main
-> - **Project Repository URL:** `https://github.com/<your user-name/jenkins-shared-libraries`.
+> - **Project Repository URL:** `https://github.com/efritznel/jenkins-shared-libraries`.
 >
 > [Notes:] 
 > Make sure the repo contains a proper directory structure eq: vars/<br/>
@@ -229,7 +229,7 @@ sudo systemctl status jenkins
 > > In **General**<br/>
 > > - **Description:** EasyShop<br/>
 > > - **Check the box:** `GitHub project`<br/>
-> > - **GitHub Repo URL:** `https://github.com/<your user-name/tws-e-commerce-app`<br/>
+> > - **GitHub Repo URL:** `https://github.com/efritznel/3tier-webapp-eks`<br/>
 >
 > > In **Trigger**<br/>
 > > - **Check the box:**`GitHub hook trigger for GITScm polling`<br/>
@@ -237,7 +237,7 @@ sudo systemctl status jenkins
 > > In **Pipeline**<br/>
 > > - **Definition:** `Pipeline script from SCM`<br/>
 > > - **SCM:** `Git`<br/>
-> > - **Repository URL:** `https://github.com/<your user-name/tws-e-commerce-app`<br/>
+> > - **Repository URL:** `https://github.com/efritznel/3tier-webapp-eks`<br/>
 > > - **Credentials:** `github-credentials`<br/>
 > > - **Branch:** master<br/>
 > > - **Script Path:** `Jenkinsfile`<br/>
@@ -283,7 +283,7 @@ Add your Access Key and Secret Key when prompted.
 **9. Update Kubeconfig for EKS**<br/>
 Run the following important command:
 ```bash
-aws eks update-kubeconfig --region eu-west-1 --name tws-eks-cluster
+aws eks update-kubeconfig --region us-east-1 --name ithomelab-eks-cluster
 ```
 * This command maps your EKS cluster with your Bastion server.
 * It helps to communicate with EKS components.
@@ -335,7 +335,7 @@ server:
       alb.ingress.kubernetes.io/backend-protocol: HTTP
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
       alb.ingress.kubernetes.io/ssl-redirect: '443'
-    hostname: argocd.devopsdock.site
+    hostname: argocd.fritzhomelab.com
     aws:
       serviceType: ClusterIP # <- Used with target-type: ip
       backendProtocolVersion: GRPC
@@ -344,7 +344,7 @@ server:
 ```
 helm upgrade my-argo-cd argo/argo-cd -n argocd -f my-values.yaml
 ```
-5. add the record in route53 “argocd.devopsdock.site” with load balancer dns.
+5. add the record in route53 “argocd.fritzhomelab.com” with load balancer dns.
 
 6. access it in browser.
 
@@ -398,7 +398,7 @@ annotations:
     kubernetes.io/ingress.class: alb
 ```
 
-- **add record to route 53 “easyshop.devopsdock.site”**
+- **add record to route 53 “easyshop.fritzhomelab.com”**
 
 - **Access your site now.**
 
@@ -450,7 +450,7 @@ annotations:
       alb.ingress.kubernetes.io/ssl-redirect: '443'
  
     hosts:
-      - grafana.devopsdock.site
+      - grafana.fritzhomelab.com
 ```
 
 **Prometheus:** 
@@ -469,7 +469,7 @@ annotations:
     
   
     hosts: 
-      - prometheus.devopsdock.site
+      - prometheus.fritzhomelab.com
         paths:
         - /
         pathType: Prefix
@@ -486,7 +486,7 @@ annotations:
       alb.ingress.kubernetes.io/ssl-redirect: '443'
     
     hosts: 
-      - alertmanager.devopsdock.site
+      - alertmanager.fritzhomelab.com
     paths:
     - /
     pathType: Prefix
@@ -677,7 +677,7 @@ ingress:
   # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: logs-kibana.devopsdock.site
+    - host: logs-kibana.fritzhomelab.com
       paths:
         - path: /
 ```
@@ -712,42 +712,42 @@ filebeatConfig:
 upgrade filebeat helm chart and check in kibana’s UI if the app logs are streaming.
 
 ## **Congratulations!** <br/>
-![EasyShop Website Screenshot](./public/easyshop.JPG)
+![Project Image](https://github.com/efritznel/3tier-webapp-eks/blob/main/images/Website.GIF)
 
 ---
 
 ### 📌 Architecture Diagram
-![Diagram](./public/diagram-export.JPG)
+![Project Image](https://github.com/efritznel/3tier-webapp-eks/blob/main/images/Microservices.gif)
 
 ---
 
-### 📌 ArgoCD
-![ArgoCD](./public/Argocd.JPG)
+### 📌 ArgoCD Login
+![Project Image](https://github.com/efritznel/3tier-webapp-eks/blob/main/images/argocd.GIF)
 
 ---
 
-### 📌 Capture
-![Capture](./public/Capture.JPG)
+### 📌 ArgoCD Deployment
+![Project Image](https://github.com/efritznel/3tier-webapp-eks/blob/main/images/argocd-deployment.GIF)
 
 ---
 
 ### 📌 AlertManager
-![AlertManager](./public/alertManager.JPG)
+![Project Image](https://github.com/efritznel/3tier-webapp-eks/blob/main/images/Alertmanager%20login.GIF)
 
+
+---
+
+### 📌 Grafana login
+![Project Image](https://github.com/efritznel/3tier-webapp-eks/blob/main/images/grafana%20login.GIF)
 
 ---
 
 ### 📌 Grafana Dashboard
-![Grafana](./public/grafana.JPG)
-
----
-
-### 📌 Kibana Logs View
-![Kibana](./public/kibana.JPG)
+![Project Image](https://github.com/efritznel/3tier-webapp-eks/blob/main/images/grafana%20dashboard.GIF)
 
 ---
 
 ### 📌 Prometheus Dashboard
-![Prometheus](./public/prometheus.JPG)
+![Project Image](https://github.com/efritznel/3tier-webapp-eks/blob/main/images/prometheus%20login.GIF)
 
-### WO! ooo!!! ...Your project is now deployed.
+

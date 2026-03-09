@@ -77,8 +77,10 @@ Thumbs.db
 mongodb/
 
 terraform/.terraform/*
-terraform/terra-key.pub
-terraform/terra-key
+terraform/new-keypair.pub
+terraform/new-keypair
+terraform/new-keypair.pem
+terraform/new-keypair.pem.pub
 terraform/terraform.tfstate*
 terraform/.terraform.lock.hcl
 terraform/.terraform/modules/*
@@ -91,7 +93,9 @@ terraform.tfstate
 terraform.tfstate.backup
 terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
-terra-key.pub
-terra-key
+new-keypair.pub
+new-keypair
+new-keypair.pem
+new-keypair.pem.pub
 terraform/apps/helm-values/.*
 

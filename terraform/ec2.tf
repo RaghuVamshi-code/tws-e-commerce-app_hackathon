@@ -11,10 +11,22 @@ data "aws_ami" "os_image" {
   }
 }
 
-resource "aws_key_pair" "deployer" {
-  key_name   = "terra-automate-key"
-  public_key = file("terra-key.pub")
+resource "tls_private_key" "new_keypair" {
+  algorithm = "ED25519"
 }
+
+resource "aws_key_pair" "new_keypair" {
+  key_name   = "new-keypair"
+  public_key = tls_private_key.new_keypair.public_key_openssh
+}
+
+resource "local_file" "new_keypair_pem" {
+  filename        = "${path.module}/keys/new-keypair.pem"
+  content         = tls_private_key.new_keypair.private_key_openssh
+  file_permission = "0600"
+}
+
+
 
 resource "aws_security_group" "allow_user_to_connect" {
   name        = "allow TLS"
@@ -53,7 +65,7 @@ resource "aws_security_group" "allow_user_to_connect" {
 resource "aws_instance" "testinstance" {
   ami                    = data.aws_ami.os_image.id
   instance_type          = var.instance_type
-  key_name               = aws_key_pair.deployer.key_name
+  key_name               = aws_key_pair.new_keypair.key_name
   vpc_security_group_ids = [aws_security_group.allow_user_to_connect.id]
   subnet_id              = module.vpc.public_subnets[0]
   user_data              = file("${path.module}/install_tools.sh")

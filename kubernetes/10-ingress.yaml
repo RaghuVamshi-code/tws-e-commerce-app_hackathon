@@ -2,19 +2,16 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: easyshop-ingress
-  namespace: easyshop
   annotations:
-    alb.ingress.kubernetes.io/group.name: easyshop-app-lb
     alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:876997124628:certificate/3fcfd586-3638-4997-9073-95d43d155430
     alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/backend-protocol: HTTP
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
     alb.ingress.kubernetes.io/ssl-redirect: '443'
-    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:153435306748:certificate/45da4535-0a31-4861-88a8-32d440a725e2
 spec:
+  ingressClassName: alb
   rules:
-  - host: easyshop.devopsdock.site
+  - host: easyshop.fritzhomelab.com
     http:
       paths:
       - path: /
@@ -24,4 +21,5 @@ spec:
             name: easyshop-service
             port:
               number: 80
+
 
