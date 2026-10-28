@@ -6,7 +6,7 @@ metadata:
   annotations:
     alb.ingress.kubernetes.io/group.name: easyshop-app-lb
     alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:876997124628:certificate/3fcfd586-3638-4997-9073-95d43d155430
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-1:442147575320:certificate/9a9413e4-d5e7-4548-bb70-f7de005e603a
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/backend-protocol: HTTP
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
