@@ -185,7 +185,7 @@ sudo systemctl status jenkins
 > **Manage Jenkins → Plugins → Available Plugins**<br/>
 > - Search and install the following:<br/>
 >   - **Docker Pipeline**<br/>
->   - **Pipeline View**
+>   - **Pipeline : Stage View**
 
 
 #### 5. **Set Up Docker & GitHub Credentials in Jenkins (Global Credentials)**<br/>
